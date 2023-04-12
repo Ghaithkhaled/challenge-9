@@ -1,24 +1,18 @@
 <?php
-// Initialize the session
 session_start();
 
-// Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
 
-// Include the database configuration file
 include('config.php');
 
-// Retrieve the current user ID
 $user_id = $_SESSION["id"];
 
-// Prepare the SQL query with a WHERE clause to filter by user ID
-$sql = "SELECT * FROM Dashboard WHERE user_id = $user_id";
+$sql = "SELECT * FROM transacties WHERE user_id = $user_id";
 $result = $conn->query($sql);
 
-// Fetch the row for the current user
 $row = $result->fetch_assoc();
 ?>
 
@@ -47,19 +41,23 @@ $row = $result->fetch_assoc();
 
     <div id="buttons">
         <a href="" class="btn btn-warning">Dashboard</a>
-        <a href="transacties.php" class="btn btn-warning">Transacties</a>
+        <a href="" class="btn btn-warning">Transacties</a>
     </div>
 
     <table>
       <tr>
-       <th>Totaal op de rekenung</th>
-       <th>Uitgegeven deze maand</th>
+       <th>Date</th>
+       <th>Payee</th>
+       <th>Categroy</th>
+       <th>Amount</th>
        <th> <a href="Edit.php">Edit</a></th>
       </tr>
 
       <tr>
-       <td><?php echo $row['Totaal op de rekening']?></td>
-       <td><?php echo $row['Uitgegeven deze maand']?></td>
+       <td><?php echo $row['Date']?></td>
+       <td><?php echo $row['payee']?></td>
+       <td><?php echo $row['Category']?></td>
+       <td><?php echo $row['Amount']?></td>
       </tr>
      </table>
   <style>
